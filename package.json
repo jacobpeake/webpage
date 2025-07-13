@@ -1,0 +1,16 @@
+{
+  "name": "jepeake-webpage",
+  "version": "1.0.0",
+  "description": "Personal webpage for jepeake",
+  "main": "index.html",
+  "scripts": {
+    "dev": "lite-server",
+    "start": "npm run dev"
+  },
+  "devDependencies": {
+    "lite-server": "^2.6.1"
+  },
+  "keywords": ["webpage", "portfolio"],
+  "author": "jepeake",
+  "license": "MIT"
+} 
