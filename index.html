@@ -2,51 +2,143 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=0.8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>jepeake</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&display=swap" rel="stylesheet">
     <style>
-      body {
-        font-family: "Times New Roman", Times, serif;
-        line-height: 1.6;
-        color: #333;
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 20px;
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
       }
-    </style>
-    <title>ASCII Art</title>
-    <style>
-        /* Ensure the ASCII art is displayed properly */
-        .ascii-art {
-            font-family: "Courier New", Courier, monospace; /* Monospaced font */
-            white-space: pre; /* Preserve whitespace */
-            font-size: 12px; /* Adjust font size as needed */
-            line-height: 1; /* Adjust line spacing if necessary */
+
+      body {
+        background: #fffff8;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        padding: 80px 20px;
+      }
+
+      .page {
+        font-family: 'Cormorant Garamond', serif;
+        font-weight: 400;
+        font-size: 17px;
+        line-height: 1.8;
+        color: #2c2c2c;
+        max-width: 720px;
+        width: 100%;
+      }
+
+      .name {
+        font-size: 32px;
+        font-weight: 300;
+        font-style: italic;
+        color: #1a1a1a;
+        letter-spacing: 1px;
+        margin-bottom: 6px;
+      }
+
+      .divider {
+        border: none;
+        border-top: 1px solid #e0e0e0;
+        margin: 28px 0;
+      }
+
+      .bio {
+        font-style: italic;
+        font-size: 19px;
+        color: #444;
+        margin-bottom: 12px;
+      }
+
+      .section-title {
+        font-weight: 600;
+        font-size: 20px;
+        font-style: italic;
+        color: #1a1a1a;
+        margin-top: 28px;
+        margin-bottom: 4px;
+      }
+
+      .item {
+        padding-left: 18px;
+        position: relative;
+      }
+
+      .item::before {
+        content: '\2013';
+        position: absolute;
+        left: 0;
+        color: #ccc;
+      }
+
+      .projects .item {
+        margin-bottom: 2px;
+      }
+
+      .project-name {
+        font-weight: 600;
+        font-style: italic;
+      }
+
+      a {
+        color: #2c2c2c;
+        text-decoration: none;
+        border-bottom: 1px solid #ddd;
+        transition: border-color 0.2s;
+      }
+
+      a:hover {
+        border-bottom-color: #2c2c2c;
+      }
+
+
+      @media (max-width: 600px) {
+        body {
+          padding: 40px 20px;
         }
+        .page {
+          font-size: 19px;
+        }
+        .name {
+          font-size: 32px;
+        }
+      }
     </style>
   </head>
   <body>
-    <p>
-      <pre class="ascii-art">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+    <div class="page">
+      <div class="section-title">doing</div>
+      <div class="item">gpu architecture at <a href="https://en.wikipedia.org/wiki/Apple_Inc.">apple</a></div>
 
-      </pre>
-      01101010 01100001 01100011 01101111 01100010<br>
-      01110000 01100101 01100001 01101011 01100101<br><br>
-      <hr><br>
-      i like deep learning + computer architecture<br /><br /><b>doing</b><br />
-      - gpu architecture at apple<br /><br /><b
-        >places i did things</b
-    ><br />- studied electrical engineering + computing at imperial college<br />- interned on gpu architecture team at apple<br /><br /><b>what interests me</b><br />- deep learning<br />- computing paradigms + architectures<br />- co-optimising software + hardware<br /><br />
-    <b>projects</b><br>gpuExplorer: compiler explorer (godbolt) but for gpus [<a href="https://gpuexplorer.com">gpuexplorer.com</a>]<br>mSight: a terminal-based performance monitor for apple silicon [<a href="https://github.com/jepeake/mtop">1</a>]<br>tinyflash: a minimal implementation of flash-attention [<a href="https://github.com/jepeake/tiny-flash-attention">2</a>]<br>tinyoptimizer: a minimal implementation of a superoptimizer for tensor programs [<a href="https://github.com/jepeake/tiny-superoptimizer">3</a>]<br>claude-safely-skip-permissions: run claude autonomously without dangerous commands [<a href="https://github.com/peake00/claude-safely-skip-permissions">4</a>]<br><br>
-      <!-- <b>contributions</b><br>apple mlx [<a href="https://github.com/ml-explore/mlx">4</a>]<br><br> -->
+      <div class="section-title">places</div>
+      <div class="item">studied electrical engineering + computing at <a href="https://en.wikipedia.org/wiki/Imperial_College_London">imperial college</a></div>
+      <div class="item">interned on gpu architecture team at <a href="https://en.wikipedia.org/wiki/Apple_Inc.">apple</a></div>
 
-      <!-- <a href="consciousness-is-unverifiable.html">consciousness is unverifiable</a><br> -->
-      <hr><br>
-      <a href="https://github.com/peake00">github</a><br /><a
-        href="https://www.linkedin.com/in/jacob-peake/"
-        >linkedin</a
-      ><br /><a href="https://x.com/peake00">X</a>
-      
-    </p>
+      <div class="section-title">interests</div>
+      <div class="item">deep learning</div>
+      <div class="item">computing paradigms + architectures</div>
+      <div class="item">co-optimising software + hardware</div>
+
+      <div class="section-title">projects</div>
+      <div class="projects">
+        <div class="item"><span class="project-name">gpuExplorer</span> &mdash; compiler explorer (godbolt) but for gpus [<a href="https://gpuexplorer.com">gpuexplorer.com</a>]</div>
+        <div class="item"><span class="project-name">mSight</span> &mdash; a terminal-based performance monitor for apple silicon [<a href="https://github.com/jepeake/mtop">1</a>]</div>
+        <div class="item"><span class="project-name">tinyflash</span> &mdash; a minimal implementation of flash-attention [<a href="https://github.com/jepeake/tiny-flash-attention">2</a>]</div>
+        <div class="item"><span class="project-name">tinyoptimizer</span> &mdash; a minimal implementation of a superoptimizer for tensor programs [<a href="https://github.com/jepeake/tiny-superoptimizer">3</a>]</div>
+        <div class="item"><span class="project-name">claude-safely-skip-permissions</span> &mdash; run claude autonomously without dangerous commands [<a href="https://github.com/peake00/claude-safely-skip-permissions">4</a>]</div>
+      </div>
+
+      <hr class="divider">
+
+      <div class="projects">
+        <div class="item"><a href="https://github.com/peake00"><span class="project-name">github</span></a></div>
+        <div class="item"><a href="https://www.linkedin.com/in/jacob-peake/"><span class="project-name">linkedin</span></a></div>
+        <div class="item"><a href="https://x.com/peake00"><span class="project-name">X</span></a></div>
+      </div>
+    </div>
   </body>
 </html>
