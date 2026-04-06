@@ -3,10 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>jepeake</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&display=swap" rel="stylesheet">
+    <title>Jacob Peake</title>
     <style>
       * {
         margin: 0;
@@ -19,48 +16,90 @@
         min-height: 100vh;
         display: flex;
         justify-content: center;
-        padding: 80px 20px;
+        padding: 72px 20px;
+        font-family: 'Mundo Serif', Georgia, serif;
+        font-weight: 200;
+        color: #4a4a4a;
       }
 
       .page {
-        font-family: 'Cormorant Garamond', serif;
-        font-weight: 400;
-        font-size: 17px;
-        line-height: 1.8;
-        color: #2c2c2c;
-        max-width: 720px;
+        max-width: 920px;
         width: 100%;
       }
 
       .name {
-        font-size: 32px;
-        font-weight: 300;
+        font-family: 'Mundo Serif Pro Italic', 'Mundo Serif Pro', Georgia, serif;
         font-style: italic;
+        font-size: 48px;
+        font-weight: 400;
         color: #1a1a1a;
-        letter-spacing: 1px;
+        letter-spacing: -0.5px;
+        margin-bottom: 40px;
+        padding-left: 200px;
+      }
+
+      .layout {
+        display: flex;
+        gap: 0;
+      }
+
+      .sidebar {
+        width: 180px;
+        flex-shrink: 0;
+        padding-right: 20px;
+      }
+
+      .sidebar-section {
+        margin-bottom: 28px;
+      }
+
+      .sidebar-label {
+        font-family: 'Mundo Serif Pro', 'Mundo Serif', Georgia, serif;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: #1a1a1a;
         margin-bottom: 6px;
       }
 
-      .divider {
-        border: none;
-        border-top: 1px solid #e0e0e0;
-        margin: 28px 0;
+      .sidebar-link {
+        display: block;
+        font-size: 17px;
+        line-height: 1.7;
+        color: #888;
+        text-decoration: none;
+        border-bottom: none;
+        transition: color 0.2s;
       }
 
-      .bio {
-        font-style: italic;
-        font-size: 19px;
-        color: #444;
-        margin-bottom: 12px;
+      .sidebar-link:hover {
+        color: #4a4a4a;
+      }
+
+      .sidebar-link.active {
+        color: #4a4a4a;
+      }
+
+      .content {
+        flex: 1;
+        min-width: 0;
+        padding-left: 20px;
+        font-size: 16px;
+        line-height: 1.8;
       }
 
       .section-title {
-        font-weight: 600;
-        font-size: 20px;
+        font-weight: 700;
         font-style: italic;
+        font-size: 15px;
         color: #1a1a1a;
         margin-top: 28px;
         margin-bottom: 4px;
+      }
+
+      .section-title:first-child {
+        margin-top: 0;
       }
 
       .item {
@@ -80,22 +119,58 @@
       }
 
       .project-name {
-        font-weight: 600;
-        font-style: italic;
+        font-weight: 400;
+      }
+
+      .item-ref {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        padding-left: 18px;
+        position: relative;
+      }
+
+      .item-ref::before {
+        content: '\2013';
+        position: absolute;
+        left: 0;
+        color: #ccc;
+      }
+
+      .item-ref .ref {
+        font-size: 13px;
+        color: #aaa;
+        white-space: nowrap;
+        margin-left: 16px;
+      }
+
+      .item-ref .ref a {
+        color: #aaa;
+        border-bottom: none;
+      }
+
+      .item-ref .ref a:hover {
+        color: #4a4a4a;
       }
 
       a {
-        color: #2c2c2c;
+        color: #4a4a4a;
         text-decoration: none;
         border-bottom: 1px solid #ddd;
         transition: border-color 0.2s;
       }
 
       a:hover {
-        border-bottom-color: #2c2c2c;
+        border-bottom-color: #4a4a4a;
       }
 
+      .divider {
+        border: none;
+        border-top: 1px solid #e0e0e0;
+        margin: 28px 0;
+      }
 
+      /* Preview popups */
       .preview {
         position: fixed;
         width: 340px;
@@ -133,7 +208,7 @@
       }
 
       .preview-wiki h3 {
-        font-family: 'Cormorant Garamond', serif;
+        font-family: 'Mundo Serif', Georgia, serif;
         font-size: 16px;
         font-weight: 600;
         margin-bottom: 6px;
@@ -141,7 +216,7 @@
       }
 
       .preview-wiki p {
-        color: #555;
+        color: #4a4a4a;
         font-size: 12.5px;
         display: -webkit-box;
         -webkit-line-clamp: 4;
@@ -154,7 +229,7 @@
       }
 
       .preview-github h3 {
-        font-family: 'Cormorant Garamond', serif;
+        font-family: 'Mundo Serif', Georgia, serif;
         font-size: 16px;
         font-weight: 600;
         margin-bottom: 6px;
@@ -162,7 +237,7 @@
       }
 
       .preview-github p {
-        color: #555;
+        color: #4a4a4a;
         font-size: 12.5px;
         margin-bottom: 8px;
       }
@@ -173,7 +248,6 @@
         display: flex;
         gap: 14px;
       }
-
 
       .preview-social {
         padding: 20px;
@@ -189,7 +263,7 @@
       }
 
       .preview-social .social-info h3 {
-        font-family: 'Cormorant Garamond', serif;
+        font-family: 'Mundo Serif', Georgia, serif;
         font-size: 16px;
         font-weight: 600;
         color: #1a1a1a;
@@ -201,46 +275,77 @@
         color: #888;
       }
 
-      @media (max-width: 600px) {
+      @media (max-width: 700px) {
         body {
           padding: 40px 20px;
         }
-        .page {
-          font-size: 19px;
-        }
+
         .name {
-          font-size: 32px;
+          padding-left: 0;
+          font-size: 36px;
+          margin-bottom: 28px;
+        }
+
+        .layout {
+          flex-direction: column;
+        }
+
+        .sidebar {
+          width: 100%;
+          padding-right: 0;
+          display: flex;
+          gap: 32px;
+          margin-bottom: 28px;
+        }
+
+        .sidebar-section {
+          margin-bottom: 0;
+        }
+
+        .content {
+          padding-left: 0;
         }
       }
     </style>
   </head>
   <body>
     <div class="page">
-      <div class="section-title">doing</div>
-      <div class="item">gpu architecture at <a href="https://en.wikipedia.org/wiki/Apple_Inc.">apple</a></div>
+      <div class="name">Jacob Peake</div>
 
-      <div class="section-title">places</div>
-      <div class="item">studied electrical engineering + computing at <a href="https://en.wikipedia.org/wiki/Imperial_College_London">imperial college</a></div>
-      <div class="item">interned on gpu architecture team at <a href="https://en.wikipedia.org/wiki/Apple_Inc.">apple</a></div>
+      <div class="layout">
+        <nav class="sidebar">
+          <div class="sidebar-section">
+            <div class="sidebar-label">Navigation</div>
+            <a class="sidebar-link active" href="/">Home</a>
+            <a class="sidebar-link" href="/writing.html">Writing</a>
+            <a class="sidebar-link" href="/projects.html">Projects</a>
+          </div>
 
-      <div class="section-title">interests</div>
-      <div class="item">deep learning</div>
-      <div class="item">computing paradigms + architectures</div>
-      <div class="item">co-optimising software + hardware</div>
+          <div class="sidebar-section">
+            <div class="sidebar-label">Find me on</div>
+            <a class="sidebar-link" href="https://github.com/jepeake">GitHub</a>
+            <a class="sidebar-link" href="https://www.linkedin.com/in/jacob-peake/">LinkedIn</a>
+            <a class="sidebar-link" href="https://x.com/jepeake_">X</a>
+          </div>
+        </nav>
 
-      <div class="section-title">projects</div>
-      <div class="projects">
-        <div class="item"><span class="project-name">gpuExplorer</span> &mdash; compiler explorer (godbolt) but for gpus [<a href="https://gpuexplorer.com">gpuexplorer.com</a>]</div>
-        <div class="item"><span class="project-name">mSight</span> &mdash; a terminal-based performance monitor for apple silicon [<a href="https://github.com/jepeake/mtop">1</a>]</div>
-        <div class="item"><span class="project-name">tinyflash</span> &mdash; a minimal implementation of flash-attention [<a href="https://github.com/jepeake/tiny-flash-attention">2</a>]</div>
-      </div>
+        <main class="content">
+          <div class="section-title">Places</div>
+          <div class="item">GPU Architecture at <a href="https://en.wikipedia.org/wiki/Apple_Inc." data-preview-title="Apple" data-preview-desc="Designs its own silicon — the A-series and M-series chips — including custom GPU architectures built from the ground up for performance and power efficiency across iPhone, iPad, and Mac.">Apple</a>.</div>
+          <div class="item">Electrical Engineering & Computing at <a href="https://en.wikipedia.org/wiki/Imperial_College_London" data-preview-title="Imperial College London" data-preview-desc="A science and engineering university in South Kensington, London. Consistently ranked among the top engineering schools in the world, with particular strength in electrical engineering, computing, and applied mathematics.">Imperial College</a>.</div>
 
-      <hr class="divider">
+          <div class="section-title">Interests</div>
+          <div class="item-ref"><span>Machine Intelligence</span><span class="ref">[<a href="https://en.wikipedia.org/wiki/Artificial_intelligence" data-preview-title="Artificial Intelligence" data-preview-desc="The theory and development of systems able to perform tasks that normally require human intelligence — learning, reasoning, perception, and decision-making.">1</a>] machines that learn, reason, and adapt</span></div>
+          <div class="item-ref"><span>Chip Architectures & Computing Paradigms</span><span class="ref">[<a href="https://en.wikipedia.org/wiki/Computer_architecture" data-preview-title="Computer Architecture" data-preview-desc="The design of a computer's instruction set, organisation, and hardware implementation — determining how a processor executes computation.">2</a>, <a href="https://en.wikipedia.org/wiki/Model_of_computation" data-preview-title="Model of Computation" data-preview-desc="A formal abstraction describing how computation is performed — from Turing machines to dataflow and cellular automata — each defining what is computable and at what cost.">3</a>] how chips are designed; how computation is modelled</span></div>
+          <div class="item-ref"><span>Hardware/Software Co-Design</span><span class="ref">[<a href="https://en.wikipedia.org/wiki/Hardware/software_co-design" data-preview-title="Hardware/Software Co-Design" data-preview-desc="The simultaneous design of hardware and software to exploit synergies across the abstraction boundary — yielding systems more efficient than either layer optimised alone.">4</a>] optimising across the stack boundary</span></div>
 
-      <div class="projects">
-        <div class="item"><a href="https://github.com/jepeake"><span class="project-name">github</span></a></div>
-        <div class="item"><a href="https://www.linkedin.com/in/jacob-peake/"><span class="project-name">linkedin</span></a></div>
-        <div class="item"><a href="https://x.com/jepeake_"><span class="project-name">X</span></a></div>
+          <div class="section-title">Projects</div>
+          <div class="projects">
+            <div class="item"><span class="project-name">gpuExplorer</span> &mdash; compiler explorer (godbolt) but for gpus [<a href="https://gpuexplorer.com">gpuexplorer.com</a>]</div>
+            <div class="item"><span class="project-name">mSight</span> &mdash; a terminal-based performance monitor for apple silicon [<a href="https://github.com/jepeake/mtop">1</a>]</div>
+            <div class="item"><span class="project-name">tinyflash</span> &mdash; a minimal implementation of flash-attention [<a href="https://github.com/jepeake/tiny-flash-attention">2</a>]</div>
+          </div>
+        </main>
       </div>
     </div>
 
@@ -261,8 +366,12 @@
       }
 
       function wikiTitle(url) {
-        const match = url.match(/\/wiki\/(.+)$/);
-        return match ? decodeURIComponent(match[1]) : null;
+        try {
+          const path = new URL(url).pathname;
+          const prefix = '/wiki/';
+          if (!path.startsWith(prefix)) return null;
+          return path.slice(prefix.length);
+        } catch { return null; }
       }
 
       function githubPath(url) {
@@ -293,7 +402,7 @@
         preview.style.left = Math.max(8, left) + 'px';
       }
 
-      document.querySelectorAll('.page a').forEach(link => {
+      document.querySelectorAll('.content a, .sidebar a').forEach(link => {
         link.addEventListener('mouseenter', async () => {
           currentLink = link;
           const url = link.href;
@@ -302,6 +411,13 @@
             if (currentLink !== link) return;
 
             try {
+              if (link.dataset.previewTitle) {
+                preview.innerHTML = `<div class="preview-wiki"><h3>${link.dataset.previewTitle}</h3><p>${link.dataset.previewDesc}</p></div>`;
+                positionPreview(link);
+                preview.classList.add('visible');
+                return;
+              }
+
               if (isWikipedia(url)) {
                 const title = wikiTitle(url);
                 if (!title) return;
@@ -314,8 +430,8 @@
                 if (data.thumbnail) {
                   html += `<img src="${data.thumbnail.source}" alt="">`;
                 }
-                html += `<h3>${data.title}</h3>`;
-                html += `<p>${data.extract}</p>`;
+                html += `<h3>${data.title || ''}</h3>`;
+                html += `<p>${data.extract || ''}</p>`;
                 html += '</div>';
                 preview.innerHTML = html;
 

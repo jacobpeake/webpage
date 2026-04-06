@@ -2,83 +2,244 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=0.8" />
-    <title>consciousness is unverifiable</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How to Learn - Jacob Peake</title>
     <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
       body {
-        font-family: "Times New Roman", Times, serif;
-        line-height: 1.6;
-        color: #333;
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 20px;
+        background: #fffff8;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        padding: 72px 20px;
+        font-family: 'Mundo Serif', Georgia, serif;
+        font-weight: 200;
+        color: #4a4a4a;
       }
-      .back-link {
-        margin-bottom: 30px;
+
+      .page {
+        max-width: 920px;
+        width: 100%;
       }
-      .back-link a {
-        color: #666;
-        text-decoration: none;
-      }
-      .back-link a:hover {
-        text-decoration: underline;
-      }
-      h1 {
-        border-bottom: 1px solid #ccc;
-        padding-bottom: 10px;
-      }
-      .date {
-        color: #666;
+
+      .name {
+        font-family: 'Mundo Serif Pro Italic', 'Mundo Serif Pro', Georgia, serif;
         font-style: italic;
+        font-size: 48px;
+        font-weight: 400;
+        color: #1a1a1a;
+        letter-spacing: -0.5px;
+        margin-bottom: 40px;
+        padding-left: 200px;
+      }
+
+      .name a {
+        color: inherit;
+        text-decoration: none;
+        border-bottom: none;
+      }
+
+      .layout {
+        display: flex;
+        gap: 0;
+      }
+
+      .sidebar {
+        width: 180px;
+        flex-shrink: 0;
+        padding-right: 20px;
+      }
+
+      .sidebar-section {
+        margin-bottom: 28px;
+      }
+
+      .sidebar-label {
+        font-family: 'Mundo Serif Pro', 'Mundo Serif', Georgia, serif;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: #1a1a1a;
+        margin-bottom: 6px;
+      }
+
+      .sidebar-link {
+        display: block;
+        font-size: 17px;
+        line-height: 1.7;
+        color: #888;
+        text-decoration: none;
+        border-bottom: none;
+        transition: color 0.2s;
+      }
+
+      .sidebar-link:hover {
+        color: #4a4a4a;
+      }
+
+      .sidebar-link.active {
+        color: #4a4a4a;
+      }
+
+      .content {
+        flex: 1;
+        min-width: 0;
+        padding-left: 20px;
+        font-size: 16px;
+        line-height: 1.8;
+      }
+
+      .article-header {
+        margin-bottom: 28px;
+      }
+
+      .article-title {
+        font-weight: 700;
+        font-style: italic;
+        font-size: 15px;
+        color: #1a1a1a;
+        margin-bottom: 2px;
+      }
+
+      .article-date {
+        font-size: 13px;
+        color: #aaa;
+      }
+
+      .article-body p {
         margin-bottom: 20px;
+      }
+
+      .article-body h3 {
+        font-weight: 700;
+        font-style: italic;
+        font-size: 15px;
+        color: #1a1a1a;
+        margin-top: 32px;
+        margin-bottom: 8px;
+      }
+
+      .article-body ol {
+        padding-left: 20px;
+        margin-bottom: 20px;
+      }
+
+      .article-body ol li {
+        margin-bottom: 4px;
+      }
+
+      a {
+        color: #4a4a4a;
+        text-decoration: none;
+        border-bottom: 1px solid #ddd;
+        transition: border-color 0.2s;
+      }
+
+      a:hover {
+        border-bottom-color: #4a4a4a;
+      }
+
+      @media (max-width: 700px) {
+        body {
+          padding: 40px 20px;
+        }
+
+        .name {
+          padding-left: 0;
+          font-size: 36px;
+          margin-bottom: 28px;
+        }
+
+        .layout {
+          flex-direction: column;
+        }
+
+        .sidebar {
+          width: 100%;
+          padding-right: 0;
+          display: flex;
+          gap: 32px;
+          margin-bottom: 28px;
+        }
+
+        .sidebar-section {
+          margin-bottom: 0;
+        }
+
+        .content {
+          padding-left: 0;
+        }
       }
     </style>
   </head>
   <body>
-    <div class="back-link">
-      <a href="index.html">← back</a>
+    <div class="page">
+      <div class="name"><a href="/">Jacob Peake</a></div>
+
+      <div class="layout">
+        <nav class="sidebar">
+          <div class="sidebar-section">
+            <div class="sidebar-label">Navigation</div>
+            <a class="sidebar-link" href="/">Home</a>
+            <a class="sidebar-link active" href="/writing.html">Writing</a>
+            <a class="sidebar-link" href="/projects.html">Projects</a>
+          </div>
+
+          <div class="sidebar-section">
+            <div class="sidebar-label">Find me on</div>
+            <a class="sidebar-link" href="https://github.com/jepeake">GitHub</a>
+            <a class="sidebar-link" href="https://www.linkedin.com/in/jacob-peake/">LinkedIn</a>
+            <a class="sidebar-link" href="https://x.com/jepeake_">X</a>
+          </div>
+        </nav>
+
+        <main class="content">
+          <div class="article-header">
+            <div class="article-title">How to Learn</div>
+            <div class="article-date">October 2024</div>
+          </div>
+
+          <div class="article-body">
+            <p>Learning is <strong><em>compression</em></strong> of high-dimensional information into lower-dimensional representations which you understand. These representations are captured into your <strong><em><a href="https://en.wikipedia.org/wiki/Semantic_network">semantic network</a></em></strong>, connecting with previously learned concepts.</p>
+
+            <p>To learn optimally, you must find the right state of mind. For me, this is finding a <strong><em><a href="https://en.wikipedia.org/wiki/Flow_(psychology)">flow state</a></em></strong>, by having narrow focus for one-hour+ intervals, with short breaks in between. Listening to consistent repetitive <strong><em><a href="https://www.youtube.com/watch?v=A9UW7i6Pj3Q">beats</a></em></strong> helps put my mind into the correct state.</p>
+
+            <p>To retain information, revisit it, ideally in flashcard format, at spaced intervals <strong><em>(active recall with <a href="https://en.wikipedia.org/wiki/Spaced_repetition">spaced repetition</a>)</em></strong>. This is particularly for exams where you need fast recall of particular information. Outside exams, consistently reapply learned knowledge to new domains, or projects, to capture it in your mind.</p>
+
+            <p>An important, but commonly overlooked, point is <strong><em>using the work of others</em></strong>. There exists a ground truth of information (the high-dimensional representation). Other people who have learned this information have compressed it into their own lower-dimensional representations, to fit it into their underlying world model. People who have studied more refine their world models & representations over time (experts in a domain have a particularly refined representation). It can be easier to query people who already have very refined representations, as you can directly access their compressed representations, which are refined and have more clarity. It can be quicker and easier to represent this yourself, and fit it into your semantic network.</p>
+
+            <p>To strengthen the connections of the internal semantic network (mind) it can be helpful to create an <strong><em>external semantic network</em></strong> (knowledge base). Being able to see & visualise the connections in the mind helps reinforce those internal connections. An external semantic network retains information over-time & therefore can hold a larger set of learned information in memory (allowing us to quickly restore information into the internal semantic network).</p>
+
+            <p>And finally, <strong><em>practice, practice, practice</em></strong>. Learned knowledge is only useful if you apply it.</p>
+
+            <h3>Rules for Learning</h3>
+            <ol>
+              <li>Find Flow State.</li>
+              <li>Use Active Recall & Spaced Repetition to retain information.</li>
+              <li>Use the Work of Others.</li>
+              <li>Create an External Semantic Network (Knowledge Base).</li>
+              <li>Practice, Practice, Practice.</li>
+            </ol>
+
+            <h3>Rules for Academics</h3>
+            <p>These lessons can be applied to <strong><em>academics</em></strong>. To perform at a high-level in your exams, do the following:</p>
+            <ol>
+              <li>Review material before lectures (pre-construct your own representation of the information).</li>
+              <li>Use the lecture as a time to listen & refine your representation + ask questions to the lecturer.</li>
+              <li>Take advantage of any help that is offered (office hours etc.) & use them to refine your representations (with information from experts).</li>
+              <li>Take advantage of the hard work of others (notes, summaries, online resources, textbooks) can all help to refine your understanding.</li>
+              <li>With exams, focus on spaced repetition & active recall from the beginning of the semester. Create flashcards when you have captured & refined the information.</li>
+              <li>Before the exam, practice applying the knowledge as much as possible. Do every single past exam you can. Use feedback from these to refine your understanding further.</li>
+            </ol>
+          </div>
+        </main>
+      </div>
     </div>
-    
-    <h1><em>how to learn</em></h1>
-    <div class="date">October 2024</div>
-    
-Learning is <strong><i>compression</i></strong> of high-dimensional information into lower-dimensional representations which you understand. These representations are captured into your <strong><i><a href="https://en.wikipedia.org/wiki/Semantic_network">semantic network</a></i></strong>, connecting with previously learned concepts. <br><br>
-
-To learn optimally, you must find the right state of mind. For me, this is finding a <strong><i><a href="https://en.wikipedia.org/wiki/Flow_(psychology)">flow state</a></i></strong>, by having narrow focus for one-hour+ intervals, with short breaks in between. Listening to consistent repetitive <strong><i><a href="https://www.youtube.com/watch?v=A9UW7i6Pj3Q">beats</a></i></strong> helps put my mind into the correct state. <br><br>
-
-To retain information, revisit it, ideally in flashcard format, at spaced intervals <strong><i>(active recall with <a href="https://en.wikipedia.org/wiki/Spaced_repetition">spaced repetition)</a></i></strong>. This is particularly for exams where you need fast recall of particular information. Outside exams, consistently reapply learned knowledge to new domains, or projects, to capture it in your mind. <br><br>
-
-An important, but commonly overlooked, point is <strong><i>using the work of others</i></strong>. There exists a ground truth of information (the high-dimensional representation). Other people who have learned this information have compressed it into their own lower-dimensional representations, to fit it into their underlying world model. People who have studied more refine their world models & representations over time (experts in a domain have a particularly refined representation). It can be easier to query people who already have very refined representations, as you can directly access their compressed representations, which are refined and have more clarity. It can be quicker and easier to represent this yourself, and fit it into your semantic network. <br><br>
-
-To strengthen the connections of the internal semantic network (mind) it can be helpful to create an <strong><i>external semantic network</i></strong> (knowledge base). Being able to see & visualise the connections in the mind helps reinforce those internal connections. An external semantic network retains information over-time & therefore can hold a larger set of learned information in memory (allowing us to quickly restore information into the internal semantic network). <br><br>
-
-And finally, <strong><i>practice, practice, practice</i></strong>. Learned knowledge is only useful if you apply it. <br><br>
-
-<h3><i>rules for learning</i></h3>
-
-<ol>
-  <li>Find Flow State.</li>
-  <li>Use Active Recall & Spaced Repetition to retain information.</li>
-  <li>Use the Work of Others.</li>
-  <li>Create an External Semantic Network (Knowledge Base).</li>
-  <li>Practice, Practice, Practice.</li><br>
-</ol>
-
-<h3><i>rules for academics</i></h3>
-
-These lessons can be applied to <strong><i>academics</i></strong>. To perform at a high-level in your exams, do the following: <br>
-<ol>
-  <li>Review material before lectures (pre-construct your own representation of the information).</li>
-  <li>Use the lecture as a time to listen & refine your representation + ask questions to the lecturer.</li>
-  <li>Take advantage of any help that is offers (office hours etc.) & use them to refine your representations (with information from experts).</li>
-  <li>Take advantage of the hard work of others (notes, summaries, online resources, textbooks) can all help to refine your understanding.</li>
-  <li>With exams, focus on spaced repetition & active recall from the beginning of the semester. Create flashcards when you have captured & refined the information.</li>
-  <li>Before the exam, practice applying the knowledge as much as possible. Do every single past exam you can. Use feedback from these to refine your understanding further.</li><br>
-</ol>
-
-
-    <br><br>
-    <p style="font-size: 0.9em; color: #666;">
-    </p>
   </body>
-</html> 
+</html>
