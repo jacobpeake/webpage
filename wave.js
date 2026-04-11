@@ -1,10 +1,6 @@
 (function () {
-  const ROWS = 6;
-  const CHARS = ['·', '·', '~', '~', '·', '·'];
-  const SPEED = 0.4;
-  const FREQ = 0.06;
+  const ROWS = 9;
 
-  // create the wave element
   const wave = document.createElement('pre');
   wave.className = 'ascii-wave';
   wave.setAttribute('aria-hidden', 'true');
@@ -12,42 +8,70 @@
   const layout = document.querySelector('.layout');
   if (!layout) return;
 
-  // insert after the layout div so it spans full width (sidebar + content)
   layout.parentElement.appendChild(wave);
 
   let frame = 0;
   let cols = 80;
 
   function measure() {
-    // approximate columns from container width / char width
     const ch = parseFloat(getComputedStyle(wave).fontSize) * 0.6;
     cols = Math.floor(layout.offsetWidth / ch);
     cols = Math.min(cols, 160);
   }
 
+  const FILL = ['~', '-', '.', '·'];
+
+  function fillChar(depth) {
+    if (depth < FILL.length) return FILL[depth];
+    return '·';
+  }
+
   function render() {
-    const t = frame * SPEED;
+    const t = frame * 0.02;
     const grid = [];
 
     for (let r = 0; r < ROWS; r++) {
       grid.push(new Array(cols).fill(' '));
     }
 
+    const freq = (2 * 2 * Math.PI) / cols;
+    const maxAmp = (ROWS - 1) / 2;
+    const center = (ROWS - 1) / 2;
+
+    // single wave with oscillating amplitude
+    // all peaks grow and shrink together uniformly
+    const amp = maxAmp * Math.abs(Math.sin(t * 0.3));
+    const horizSpeed = 0.8;
+
     for (let c = 0; c < cols; c++) {
-      // two overlapping sine waves for visual depth
-      const y1 = Math.sin(c * FREQ + t * 0.03) * ((ROWS - 1) / 2) + (ROWS - 1) / 2;
-      const y2 = Math.sin(c * FREQ * 1.3 + t * 0.02 + 2) * ((ROWS - 2) / 2) + (ROWS - 1) / 2;
+      const phase = c * freq - t * horizSpeed;
+      const y = amp * Math.sin(phase);
 
-      const row1 = Math.round(y1);
-      const row2 = Math.round(y2);
+      const waveRow = Math.round(center - y);
+      const clamped = Math.max(0, Math.min(ROWS - 1, waveRow));
 
-      if (row1 >= 0 && row1 < ROWS) {
-        grid[row1][c] = CHARS[row1];
+      if (y >= 0) {
+        for (let r = clamped + 1; r < ROWS; r++) {
+          const depth = r - clamped - 1;
+          grid[r][c] = fillChar(depth);
+        }
+      } else {
+        for (let r = clamped - 1; r >= 0; r--) {
+          const depth = clamped - r - 1;
+          grid[r][c] = fillChar(depth);
+        }
       }
-      if (row2 >= 0 && row2 < ROWS) {
-        // second wave uses a lighter character
-        if (grid[row2][c] === ' ') {
-          grid[row2][c] = '.';
+
+      grid[clamped][c] = '≈';
+
+      if (c > 0) {
+        const phasePrev = (c - 1) * freq - t * horizSpeed;
+        const yPrev = amp * Math.sin(phasePrev);
+        const prevRow = Math.max(0, Math.min(ROWS - 1, Math.round(center - yPrev)));
+        const lo = Math.min(clamped, prevRow);
+        const hi = Math.max(clamped, prevRow);
+        for (let r = lo + 1; r < hi; r++) {
+          grid[r][c] = '│';
         }
       }
     }
