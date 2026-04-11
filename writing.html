@@ -4,193 +4,22 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Writing - Jacob Peake</title>
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        background: #fffff8;
-        min-height: 100vh;
-        display: flex;
-        justify-content: center;
-        padding: 72px 20px;
-        font-family: 'Mundo Serif', Georgia, serif;
-        font-weight: 200;
-        color: #4a4a4a;
-      }
-
-      .page {
-        max-width: 920px;
-        width: 100%;
-      }
-
-      .name {
-        font-family: 'Mundo Serif Pro Italic', 'Mundo Serif Pro', Georgia, serif;
-        font-style: italic;
-        font-size: 48px;
-        font-weight: 400;
-        color: #1a1a1a;
-        letter-spacing: -0.5px;
-        margin-bottom: 40px;
-        padding-left: 200px;
-      }
-
-      .layout {
-        display: flex;
-        gap: 0;
-      }
-
-      .sidebar {
-        width: 180px;
-        flex-shrink: 0;
-        padding-right: 20px;
-      }
-
-      .sidebar-section {
-        margin-bottom: 28px;
-      }
-
-      .sidebar-label {
-        font-family: 'Mundo Serif Pro', 'Mundo Serif', Georgia, serif;
-        font-size: 11px;
-        font-weight: 700;
-        letter-spacing: 1.5px;
-        text-transform: uppercase;
-        color: #1a1a1a;
-        margin-bottom: 6px;
-      }
-
-      .sidebar-link {
-        display: block;
-        font-size: 17px;
-        line-height: 1.7;
-        color: #888;
-        text-decoration: none;
-        border-bottom: none;
-        transition: color 0.2s;
-      }
-
-      .sidebar-link:hover {
-        color: #4a4a4a;
-      }
-
-      .sidebar-link.active {
-        color: #4a4a4a;
-      }
-
-      .content {
-        flex: 1;
-        min-width: 0;
-        padding-left: 20px;
-        font-size: 16px;
-        line-height: 1.8;
-      }
-
-      .article-item {
-        margin-bottom: 20px;
-      }
-
-      .article-title {
-        font-weight: 400;
-        font-size: 16px;
-      }
-
-      .article-title a {
-        color: #4a4a4a;
-        text-decoration: none;
-        border-bottom: 1px solid #ddd;
-        transition: border-color 0.2s;
-      }
-
-      .article-title a:hover {
-        border-bottom-color: #4a4a4a;
-      }
-
-      .article-date {
-        font-size: 14px;
-        color: #888;
-      }
-
-      a {
-        color: #4a4a4a;
-        text-decoration: none;
-        border-bottom: 1px solid #ddd;
-        transition: border-color 0.2s;
-      }
-
-      a:hover {
-        border-bottom-color: #4a4a4a;
-      }
-
-      @media (max-width: 700px) {
-        body {
-          padding: 40px 20px;
-        }
-
-        .name {
-          padding-left: 0;
-          font-size: 36px;
-          margin-bottom: 28px;
-        }
-
-        .layout {
-          flex-direction: column;
-        }
-
-        .sidebar {
-          width: 100%;
-          padding-right: 0;
-          display: flex;
-          gap: 32px;
-          margin-bottom: 28px;
-        }
-
-        .sidebar-section {
-          margin-bottom: 0;
-        }
-
-        .content {
-          padding-left: 0;
-        }
-      }
-    </style>
+    <link rel="stylesheet" href="/style.css">
   </head>
   <body>
     <div class="page">
-      <div class="name">Jacob Peake</div>
+      <div class="article-item">
+        <div class="article-title"><a href="/consciousness-is-unverifiable.html">Consciousness is Unverifiable</a></div>
+        <div class="article-date">July 2025</div>
+      </div>
 
-      <div class="layout">
-        <nav class="sidebar">
-          <div class="sidebar-section">
-            <div class="sidebar-label">Navigation</div>
-            <a class="sidebar-link" href="/">Home</a>
-            <a class="sidebar-link active" href="/writing.html">Writing</a>
-            <a class="sidebar-link" href="/projects.html">Projects</a>
-          </div>
-
-          <div class="sidebar-section">
-            <div class="sidebar-label">Find me on</div>
-            <a class="sidebar-link" href="https://github.com/jepeake">GitHub</a>
-            <a class="sidebar-link" href="https://www.linkedin.com/in/jacob-peake/">LinkedIn</a>
-            <a class="sidebar-link" href="https://x.com/jepeake_">X</a>
-          </div>
-        </nav>
-
-        <main class="content">
-          <div class="article-item">
-            <div class="article-title"><a href="/consciousness-is-unverifiable.html">Consciousness is Unverifiable</a></div>
-            <div class="article-date">July 2025</div>
-          </div>
-
-          <div class="article-item">
-            <div class="article-title"><a href="/how-to-learn.html">How to Learn</a></div>
-            <div class="article-date">October 2024</div>
-          </div>
-        </main>
+      <div class="article-item">
+        <div class="article-title"><a href="/how-to-learn.html">How to Learn</a></div>
+        <div class="article-date">October 2023</div>
       </div>
     </div>
+
+    <script src="/layout.js"></script>
+    <script src="/preview.js"></script>
   </body>
 </html>
