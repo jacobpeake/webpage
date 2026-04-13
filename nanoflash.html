@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>nanoFlash - Jacob Peake</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  </head>
+  <body>
+    <div class="page">
+      <div class="article-header">
+        <div class="article-title">nanoFlash</div>
+        <div class="article-date">December 2024</div>
+      </div>
+
+      <div class="article-body" data-src="/posts/nanoflash.md"></div>
+    </div>
+
+    <div class="code-modal-overlay" id="kernel-modal">
+      <div class="code-modal">
+        <div class="code-modal-header">
+          <span class="code-modal-title">cuda.cu</span>
+        </div>
+        <pre><code><span class="line-num"> 1</span><span class="dir">#include</span> <span class="str">&lt;torch/types.h&gt;</span>
+<span class="line-num"> 2</span><span class="dir">#include</span> <span class="str">&lt;cuda.h&gt;</span>
+<span class="line-num"> 3</span><span class="dir">#include</span> <span class="str">&lt;cuda_runtime.h&gt;</span>
+<span class="line-num"> 4</span>
+<span class="line-num"> 5</span><span class="kw">__global__</span> <span class="type">void</span> <span class="fn">flash_attn</span>(<span class="kw">const</span> <span class="type">float</span>* Q, <span class="kw">const</span> <span class="type">float</span>* K, <span class="kw">const</span> <span class="type">float</span>* V, <span class="kw">const</span> <span class="type">int</span> N, <span class="kw">const</span> <span class="type">int</span> d, <span class="kw">const</span> <span class="type">int</span> Tc, <span class="kw">const</span> <span class="type">int</span> Tr, <span class="kw">const</span> <span class="type">int</span> Bc, <span class="kw">const</span> <span class="type">int</span> Br, <span class="kw">const</span> <span class="type">float</span> scale, <span class="type">float</span>* l, <span class="type">float</span> *m, <span class="type">float</span>* O) {
+<span class="line-num"> 6</span>    <span class="kw">extern</span> <span class="kw">__shared__</span> <span class="type">float</span> sram[]; <span class="type">float</span>* Qi = sram, *Kj = &amp;sram[Bc*d], *Vj = &amp;sram[<span class="num">2</span>*Bc*d], *S = &amp;sram[<span class="num">3</span>*Bc*d]; <span class="cmt">// SRAM Tiles for Q, K, V, &amp; S</span>
+<span class="line-num"> 7</span>    <span class="type">int</span> tx = threadIdx.x, qkv_idx = (blockIdx.x*gridDim.y + blockIdx.y)*N*d, lm_idx = qkv_idx/d; <span class="cmt">// Thread ID &amp; Base Indices for Q/K/V &amp; l/m</span>
+<span class="line-num"> 8</span>    <span class="kw">for</span> (<span class="type">int</span> j = <span class="num">0</span>; j &lt; Tc; j++) { <span class="cmt">// Loop over Column Tiles of K/V</span>
+<span class="line-num"> 9</span>        <span class="kw">for</span> (<span class="type">int</span> x = <span class="num">0</span>; x &lt; d; x++) Kj[tx * d + x] = K[qkv_idx + j * Bc * d + tx * d + x], Vj[tx * d + x] = V[qkv_idx + j * Bc * d + tx * d + x]; <span class="cmt">// Load K/V Tiles into SRAM</span>
+<span class="line-num">10</span>        <span class="fn">__syncthreads</span>(); <span class="cmt">// Ensure K/V Tile is Fully Loaded</span>
+<span class="line-num">11</span>        <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i &lt; Tr; i++) { <span class="cmt">// Loop over Row Tiles of Q</span>
+<span class="line-num">12</span>            <span class="kw">for</span> (<span class="type">int</span> x = <span class="num">0</span>; x &lt; d; x++) Qi[tx * d + x] = Q[qkv_idx + i * Bc * d + tx * d + x];
+<span class="line-num">13</span>            <span class="type">float</span> mi = m[lm_idx + i*Br + tx], li = l[lm_idx + i*Br + tx], row_m = -INFINITY, row_l = <span class="num">0</span>; <span class="cmt">// Run Softmax on Row Tile</span>
+<span class="line-num">14</span>            <span class="kw">for</span> (<span class="type">int</span> y = <span class="num">0</span>; y &lt; Bc; y++) { <span class="type">float</span> sum = <span class="num">0</span>; <span class="kw">for</span> (<span class="type">int</span> x = <span class="num">0</span>; x &lt; d; x++) sum += Qi[tx * d + x] * Kj[y * d + x]; row_m = <span class="fn">max</span>(row_m, S[Bc * tx + y] = sum * scale); } <span class="cmt">// Compute Row Tile Sum &amp; Max</span>
+<span class="line-num">15</span>            <span class="kw">for</span> (<span class="type">int</span> y = <span class="num">0</span>; y &lt; Bc; y++) row_l += S[Bc * tx + y] = <span class="fn">__expf</span>(S[Bc * tx + y] - row_m); <span class="cmt">// Exponentiate Shifted Logits &amp; Accumulate Row Sum</span>
+<span class="line-num">16</span>            <span class="type">float</span> mi_new = <span class="fn">max</span>(mi, row_m), li_new = <span class="fn">__expf</span>(mi - mi_new) * li + <span class="fn">__expf</span>(row_m - mi_new) * row_l; <span class="cmt">// Update Running Max &amp; Sum</span>
+<span class="line-num">17</span>            <span class="kw">for</span> (<span class="type">int</span> x = <span class="num">0</span>; x &lt; d; x++) { <span class="type">float</span> pv = <span class="num">0</span>; <span class="kw">for</span> (<span class="type">int</span> y = <span class="num">0</span>; y &lt; Bc; y++) pv += S[Bc * tx + y] * Vj[y * d + x]; O[qkv_idx + i * Bc * d + tx * d + x] = (<span class="num">1</span> / li_new) * (<span class="fn">__expf</span>(mi - mi_new) * li * O[qkv_idx + i * Bc * d + tx * d + x] + <span class="fn">__expf</span>(row_m - mi_new) * pv);} <span class="cmt">// Weighted Accumulation into Output</span>
+<span class="line-num">18</span>            m[lm_idx + i * Br + tx] = mi_new, l[lm_idx + i * Br + tx] = li_new; <span class="cmt">// Update Running Max &amp; Sum for Next Iteration</span>
+<span class="line-num">19</span>        }
+<span class="line-num">20</span>        <span class="fn">__syncthreads</span>(); <span class="cmt">// Ensure All Threads Have Finished</span>
+<span class="line-num">21</span>    }
+<span class="line-num">22</span>}
+<span class="line-num">23</span>
+<span class="line-num">24</span>torch::Tensor <span class="fn">forward</span>(torch::Tensor Q, torch::Tensor K, torch::Tensor V) {
+<span class="line-num">25</span>    cudaDeviceProp props; <span class="fn">cudaGetDeviceProperties</span>(&amp;props, <span class="num">0</span>); <span class="kw">const</span> <span class="type">int</span> B = Q.<span class="fn">size</span>(<span class="num">0</span>), nh = Q.<span class="fn">size</span>(<span class="num">1</span>), N = Q.<span class="fn">size</span>(<span class="num">2</span>), d = Q.<span class="fn">size</span>(<span class="num">3</span>), Bc = <span class="fn">ceil</span>(props.sharedMemPerBlock/(<span class="num">4</span> * d)), Br = std::<span class="fn">min</span>(Bc, d), Tc = <span class="fn">ceil</span>((<span class="type">float</span>)N/Bc), Tr = <span class="fn">ceil</span>((<span class="type">float</span>)N/Br);
+<span class="line-num">26</span>    <span class="kw">auto</span> O = torch::<span class="fn">zeros_like</span>(Q); <span class="kw">auto</span> l = torch::<span class="fn">zeros</span>({B, nh, N}).<span class="fn">to</span>(Q.<span class="fn">device</span>()), m = torch::<span class="fn">full</span>({B, nh, N}, -INFINITY).<span class="fn">to</span>(Q.<span class="fn">device</span>()); dim3 <span class="fn">grid</span>(B, nh), <span class="fn">block</span>(Bc);
+<span class="line-num">27</span>    flash_attn&lt;&lt;&lt;grid, block, (<span class="num">3</span>*Bc*d + Bc*Br)*<span class="kw">sizeof</span>(<span class="type">float</span>)&gt;&gt;&gt;(Q.<span class="fn">data_ptr</span>&lt;<span class="type">float</span>&gt;(), K.<span class="fn">data_ptr</span>&lt;<span class="type">float</span>&gt;(), V.<span class="fn">data_ptr</span>&lt;<span class="type">float</span>&gt;(), N, d, Tc, Tr, Bc, Br, <span class="num">1.0f</span>/<span class="fn">sqrt</span>(d), l.<span class="fn">data_ptr</span>&lt;<span class="type">float</span>&gt;(), m.<span class="fn">data_ptr</span>&lt;<span class="type">float</span>&gt;(), O.<span class="fn">data_ptr</span>&lt;<span class="type">float</span>&gt;());
+<span class="line-num">28</span>    <span class="kw">return</span> O; <span class="cmt">// Returns Final Attention Output</span>
+<span class="line-num">29</span>}</code></pre>
+      </div>
+    </div>
+
+    <script src="/layout.js"></script>
+    <script src="/preview.js"></script>
+    <script src="/article.js"></script>
+
+    <script>
+      // Wire up kernel modal after markdown renders
+      const waitForRender = setInterval(() => {
+        const h3s = document.querySelectorAll('.article-body h3');
+        for (const h3 of h3s) {
+          if (h3.textContent.trim() === 'The Kernel') {
+            clearInterval(waitForRender);
+            const link = document.createElement('span');
+            link.className = 'view-source-link';
+            link.textContent = 'view source';
+            h3.appendChild(link);
+
+            const overlay = document.getElementById('kernel-modal');
+            const modal = overlay.querySelector('.code-modal');
+            let hideTimeout;
+
+            link.addEventListener('mouseenter', () => {
+              clearTimeout(hideTimeout);
+              overlay.classList.add('visible');
+            });
+            link.addEventListener('mouseleave', () => {
+              hideTimeout = setTimeout(() => overlay.classList.remove('visible'), 200);
+            });
+            modal.addEventListener('mouseenter', () => clearTimeout(hideTimeout));
+            modal.addEventListener('mouseleave', () => {
+              overlay.classList.remove('visible');
+            });
+            break;
+          }
+        }
+      }, 100);
+    </script>
+  </body>
+</html>

@@ -54,6 +54,32 @@
       title: 'Docker',
       desc: 'Container platform for packaging and running applications in isolated environments.',
       img: 'https://www.docker.com/wp-content/uploads/2022/03/Moby-logo.png'
+    },
+    'https://arxiv.org/abs/2205.14135': {
+      title: 'Flash Attention',
+      desc: 'Fast and memory-efficient exact attention with IO-awareness. Dao et al., 2022.'
+    },
+    'https://arxiv.org/abs/1805.02867': {
+      title: 'Online Softmax',
+      desc: 'Online normalizer calculation for softmax. Milakov & Gimelshein, 2018.'
+    },
+    'https://en.wikipedia.org/wiki/Apple_silicon': {
+      title: 'Apple Silicon',
+      desc: 'Apple\u2019s family of ARM-based SoCs. Heterogeneous architecture with efficiency cores, performance cores, GPU, and Neural Engine on a single chip.',
+      img: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg'
+    },
+    'https://www.rust-lang.org/': {
+      title: 'Rust',
+      desc: 'A systems programming language focused on safety, speed, and concurrency.',
+      img: 'https://www.rust-lang.org/logos/rust-logo-512x512.png'
+    },
+    'https://github.com/tlkh/asitop': {
+      title: 'asitop',
+      desc: 'A Python-based Apple Silicon performance monitor. Inspired the development of mSight.'
+    },
+    'https://github.com/context-labs/mactop': {
+      title: 'mactop',
+      desc: 'A terminal-based monitoring tool for macOS, similar to htop but with Apple Silicon metrics.'
     }
   };
 
@@ -78,5 +104,19 @@
 
       // re-init preview.js on new links
       if (window.initPreviews) window.initPreviews();
+
+      // render LaTeX math via KaTeX if available
+      if (window.katex) {
+        // display math: $$...$$
+        body.innerHTML = body.innerHTML.replace(/\$\$([^$]+)\$\$/g, (_, tex) => {
+          try { return katex.renderToString(tex.trim(), { displayMode: true, throwOnError: false }); }
+          catch { return _; }
+        });
+        // inline math: $...$
+        body.innerHTML = body.innerHTML.replace(/\$([^$]+)\$/g, (_, tex) => {
+          try { return katex.renderToString(tex.trim(), { displayMode: false, throwOnError: false }); }
+          catch { return _; }
+        });
+      }
     });
 })();
