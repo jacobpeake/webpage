@@ -562,6 +562,11 @@ a:hover {
   flex-shrink: 0;
 }
 
+.preview-with-logo .preview-text {
+  flex: 1;
+  min-width: 0;
+}
+
 .preview-title-row {
   display: flex;
   align-items: baseline;
