@@ -80,12 +80,7 @@ The old output is ***rescaled*** by how much the running max changed, and the ne
 
 ***Launch.*** The `forward()` function queries the GPU's shared memory capacity, computes tile sizes ($B_c = \lfloor \text{sram} / (4d) \rfloor$), allocates the running statistics ($l$ initialised to 0, $m$ to $-\infty$), and launches the kernel.
 
-There is no backward pass, no mixed precision, no causal masking, no multi-GPU support. Just the core algorithm, as clearly as I could write it.
+There is no backward pass, no mixed precision, no causal masking, no multi-GPU support.
 
----
+Just the core algorithm, as clearly as I could write it.
 
-### What It Demonstrates
-
-Writing this was mostly an exercise in understanding. Flash Attention is easier to understand when you can see the ***entire*** algorithm at once, without the complexity of a production implementation.
-
-The key ideas: tiling through SRAM to avoid materialising the attention matrix, online softmax to enable streaming computation, and the rescaling trick that makes incremental accumulation exact. These are all visible in 30 lines.
